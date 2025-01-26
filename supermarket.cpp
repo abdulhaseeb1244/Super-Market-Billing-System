@@ -15,7 +15,6 @@ struct Product {
     double price;
     int quantity;
 };
-
 // Customer structure
 struct Customer {
     char name[50];
@@ -23,11 +22,9 @@ struct Customer {
     char phone[15];
     char cnic[15];
 };
-
 // Global product list
 Product products[MAX_PRODUCTS];
 int productCount = 0;
-
 // Function Prototypes
 void adminMenu();
 void customerMenu();
@@ -46,7 +43,6 @@ void authenticateCustomer(Customer &customer);
 void searchProductByID();
 void searchProductByName();
 bool verifyAdmin();
-
 // Load products from file
 void loadProducts() {
     ifstream file("products.txt");
@@ -54,7 +50,6 @@ void loadProducts() {
         cout << "Warning: Could not open products file. Starting fresh.\n";
         return;
     }
-
     productCount = 0;
     while (file >> products[productCount].productID) {
         file.ignore(); // Ignore newline
@@ -62,10 +57,8 @@ void loadProducts() {
         file >> products[productCount].price >> products[productCount].quantity;
         productCount++;
     }
-
     file.close();
 }
-
 // Save products to file
 void saveProducts() {
     ofstream file("products.txt", ios::trunc);
@@ -73,7 +66,6 @@ void saveProducts() {
         cout << "Error: Could not save products.\n";
         return;
     }
-
     for (int i = 0; i < productCount; i++) {
         file << products[i].productID << "\n"
              << products[i].name << "\n"
@@ -81,7 +73,6 @@ void saveProducts() {
     }
     file.close();
 }
-
 // Save customer details to file
 void saveCustomerDetails(const Customer &customer) {
     ofstream file("customers.txt", ios::app);
@@ -89,14 +80,12 @@ void saveCustomerDetails(const Customer &customer) {
         cout << "Error: Could not save customer details.\n";
         return;
     }
-
     file << "Name: " << customer.name << "\n"
          << "Email: " << customer.email << "\n"
          << "Phone: " << customer.phone << "\n"
          << "CNIC: " << customer.cnic << "\n\n";
     file.close();
 }
-
 // Admin: Add a new product
 void addProduct() {
     if (productCount >= MAX_PRODUCTS) {
@@ -107,7 +96,7 @@ void addProduct() {
     Product newProduct;
     cout << "Enter product ID: ";
     cin >> newProduct.productID;
-
+    
     // Check for duplicate product ID
     for (int i = 0; i < productCount; i++) {
         if (products[i].productID == newProduct.productID) {
@@ -115,7 +104,6 @@ void addProduct() {
             return;
         }
     }
-
     cin.ignore();
     cout << "Enter product name: ";
     cin.getline(newProduct.name, 50);
@@ -129,7 +117,6 @@ void addProduct() {
 
     cout << "Product added successfully!\n";
 }
-
 // Admin: Edit an existing product
 void editProduct() {
     int id;
@@ -152,10 +139,8 @@ void editProduct() {
             return;
         }
     }
-
     cout << "Product not found.\n";
 }
-
 // Admin: Delete a product
 void deleteProduct() {
     int id;
@@ -173,17 +158,14 @@ void deleteProduct() {
             return;
         }
     }
-
     cout << "Product not found.\n";
 }
-
 // Admin: View all products
 void viewProducts() {
     if (productCount == 0) {
         cout << "No products available.\n";
         return;
     }
-
     cout << left << setw(10) << "ID" << setw(30) << "Name" << setw(10) << "Price" << "Quantity\n";
     cout << string(60, '-') << "\n";
 
@@ -194,14 +176,12 @@ void viewProducts() {
              << products[i].quantity << "\n";
     }
 }
-
 // Customer: View cart
 void viewCart(Product cart[], int cartSize) {
     if (cartSize == 0) {
         cout << "Your cart is empty.\n";
         return;
     }
-
     cout << "\nYour Cart:\n";
     cout << left << setw(10) << "ID" << setw(30) << "Name" << setw(10) << "Price" << "Quantity\n";
     cout << string(60, '-') << "\n";
@@ -213,7 +193,6 @@ void viewCart(Product cart[], int cartSize) {
              << cart[i].quantity << "\n";
     }
 }
-
 // Customer: Add to cart and checkout
 void addToCart(Product cart[], int &cartSize, double &total) {
     int id, qty;
@@ -242,14 +221,12 @@ void addToCart(Product cart[], int &cartSize, double &total) {
     }
     cout << "Product not found.\n";
 }
-
 // Customer: Checkout and display the bill
 void checkout(Product cart[], int cartSize, double total, const Customer &customer) {
     if (cartSize == 0) {
         cout << "Your cart is empty.\n";
         return;
     }
-
     cout << "\nYour Cart:\n";
     cout << left << setw(10) << "ID" << setw(30) << "Name" << setw(10) << "Price" << "Quantity\n";
     cout << string(60, '-') << "\n";
@@ -260,11 +237,9 @@ void checkout(Product cart[], int cartSize, double total, const Customer &custom
              << setw(10) << cart[i].price
              << cart[i].quantity << "\n";
     }
-
     cout << "\nTotal: $" << fixed << setprecision(2) << total << "\n";
     cout << "Thank you for shopping with us, " << customer.name << "!\n";
 }
-
 // Customer: Authenticate customer details
 void authenticateCustomer(Customer &customer) {
     cin.ignore();
@@ -281,7 +256,6 @@ void authenticateCustomer(Customer &customer) {
 
     cout << "\nThank you, " << customer.name << "! Let's start shopping.\n";
 }
-
 // Search products by ID
 void searchProductByID() {
     int id;
@@ -296,10 +270,8 @@ void searchProductByID() {
             return;
         }
     }
-
     cout << "Product not found.\n";
 }
-
 // Search products by Name
 void searchProductByName() {
     char name[50];
@@ -316,12 +288,10 @@ void searchProductByName() {
             found = true;
         }
     }
-
     if (!found) {
         cout << "Product not found.\n";
     }
 }
-
 // Customer: Product menu (View/Search Products)
 void productMenu() {
     while (true) {
@@ -351,7 +321,6 @@ void productMenu() {
         }
     }
 }
-
 // Customer Menu
 void customerMenu() {
     Product cart[MAX_CART_ITEMS];
@@ -392,7 +361,6 @@ void customerMenu() {
         }
     }
 }
-
 // Admin Menu
 void adminMenu() {
     while (true) {
@@ -426,7 +394,6 @@ void adminMenu() {
         }
     }
 }
-
 // Function to verify admin credentials
 bool verifyAdmin() {
     string username, password;
@@ -444,7 +411,6 @@ bool verifyAdmin() {
         return false;
     }
 }
-
 // Main Menu
 int main() {
     loadProducts();
@@ -469,11 +435,10 @@ int main() {
                 break;
             case 3:
                 saveProducts();
-                cout << "Exiting program. Goodbye!\n";
+                cout << "Exiting program.... Goodbye!\n";
                 return 0;
             default:
-                cout << "Invalid choice. Try again.\n";
+                cout << "Invalid choice.... Try again.\n";
         }
     }
 }
-
