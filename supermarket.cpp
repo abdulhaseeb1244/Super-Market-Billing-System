@@ -188,6 +188,27 @@ void authenticateCustomer(Customer &customer) {
 }
 
 
+// Search products by Name
+void searchProductByName() {
+    char name[50];
+    cout << "Enter product name to search: ";
+    cin.ignore();
+    cin.getline(name, 50);
+
+    bool found = false;
+    for (int i = 0; i < productCount; i++) {
+        if (strstr(products[i].name, name)) {
+            cout << "Product found: " << products[i].name << "\n"
+                 << "Price: " << products[i].price << "\n"
+                 << "Available stock: " << products[i].quantity << "\n";
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "Product not found.\n";
+    }
+}
 
 // Customer: Product menu (View/Search Products)
 void productMenu() {
