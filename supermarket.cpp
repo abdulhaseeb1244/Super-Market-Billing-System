@@ -36,10 +36,15 @@ void loadProducts();
 void saveProducts();
 void saveCustomerDetails(const Customer &customer);
 void addProduct();
+void editProduct();
+void deleteProduct();
+void viewProducts();
 void addToCart(Product cart[], int &cartSize, double &total);
 void checkout(Product cart[], int cartSize, double total, const Customer &customer);
 void authenticateCustomer(Customer &customer);
-
+void searchProductByID();
+void searchProductByName();
+bool verifyAdmin();
 
 // Load products from file
 void loadProducts() {
@@ -85,7 +90,9 @@ void saveCustomerDetails(const Customer &customer) {
     }
 
     file << "Name: " << customer.name << "\n"
-        
+         << "Email: " << customer.email << "\n"
+         << "Phone: " << customer.phone << "\n"
+         << "CNIC: " << customer.cnic << "\n\n";
     file.close();
 }
 
@@ -122,7 +129,70 @@ void addProduct() {
     cout << "Product added successfully!\n";
 }
 
+// Admin: Edit an existing product
+void editProduct() {
+    int id;
+    cout << "Enter product ID to edit: ";
+    cin >> id;
 
+    for (int i = 0; i < productCount; i++) {
+        if (products[i].productID == id) {
+            cout << "Editing product: " << products[i].name << "\n";
+            cout << "Enter new name: ";
+            cin.ignore();
+            cin.getline(products[i].name, 50);
+            cout << "Enter new price: ";
+            cin >> products[i].price;
+            cout << "Enter new quantity: ";
+            cin >> products[i].quantity;
+
+            saveProducts();
+            cout << "Product updated successfully!\n";
+            return;
+        }
+    }
+
+    cout << "Product not found.\n";
+}
+
+// Admin: Delete a product
+void deleteProduct() {
+    int id;
+    cout << "Enter product ID to delete: ";
+    cin >> id;
+
+    for (int i = 0; i < productCount; i++) {
+        if (products[i].productID == id) {
+            for (int j = i; j < productCount - 1; j++) {
+                products[j] = products[j + 1];
+            }
+            productCount--;
+            saveProducts();
+            cout << "Product deleted successfully!\n";
+            return;
+        }
+    }
+
+    cout << "Product not found.\n";
+}
+
+// Admin: View all products
+void viewProducts() {
+    if (productCount == 0) {
+        cout << "No products available.\n";
+        return;
+    }
+
+    cout << left << setw(10) << "ID" << setw(30) << "Name" << setw(10) << "Price" << "Quantity\n";
+    cout << string(60, '-') << "\n";
+
+    for (int i = 0; i < productCount; i++) {
+        cout << left << setw(10) << products[i].productID
+             << setw(30) << products[i].name
+             << setw(10) << products[i].price
+             << products[i].quantity << "\n";
+    }
+}
 
 // Customer: Add to cart and checkout
 void addToCart(Product cart[], int &cartSize, double &total) {
@@ -180,13 +250,35 @@ void authenticateCustomer(Customer &customer) {
     cin.ignore();
     cout << "Enter your Name: ";
     cin.getline(customer.name, 50);
-   
+    cout << "Enter your Email: ";
+    cin.getline(customer.email, 50);
+    cout << "Enter your Phone Number: ";
+    cin.getline(customer.phone, 15);
+    cout << "Enter your CNIC: ";
+    cin.getline(customer.cnic, 15);
 
     saveCustomerDetails(customer);
 
     cout << "\nThank you, " << customer.name << "! Let's start shopping.\n";
 }
 
+// Search products by ID
+void searchProductByID() {
+    int id;
+    cout << "Enter product ID to search: ";
+    cin >> id;
+
+    for (int i = 0; i < productCount; i++) {
+        if (products[i].productID == id) {
+            cout << "Product found: " << products[i].name << "\n"
+                 << "Price: " << products[i].price << "\n"
+                 << "Available stock: " << products[i].quantity << "\n";
+            return;
+        }
+    }
+
+    cout << "Product not found.\n";
+}
 
 // Search products by Name
 void searchProductByName() {
