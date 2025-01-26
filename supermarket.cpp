@@ -253,9 +253,9 @@ void authenticateCustomer(Customer &customer) {
     cout << "Enter your Email: ";
     cin.getline(customer.email, 50);
     cout << "Enter your Phone Number: ";
-    cin.getline(customer.phone, 15);
+    cin.getline(customer.phone, 11);
     cout << "Enter your CNIC: ";
-    cin.getline(customer.cnic, 15);
+    cin.getline(customer.cnic, 13);
 
     saveCustomerDetails(customer);
 
