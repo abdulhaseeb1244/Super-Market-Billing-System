@@ -54,6 +54,7 @@ Prepare the Data Files:
 - Ensure the following files are in the same directory as the compiled program:
 
 -- products.txt (for storing product details).
+
 -- customers.txt (for saving customer information).
 
 If the files don't exist, the program will create them automatically on the first run.
