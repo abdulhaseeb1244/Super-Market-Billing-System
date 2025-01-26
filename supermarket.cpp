@@ -90,7 +90,9 @@ void saveCustomerDetails(const Customer &customer) {
     }
 
     file << "Name: " << customer.name << "\n"
-         
+         << "Email: " << customer.email << "\n"
+         << "Phone: " << customer.phone << "\n"
+         << "CNIC: " << customer.cnic << "\n\n";
     file.close();
 }
 
@@ -248,7 +250,12 @@ void authenticateCustomer(Customer &customer) {
     cin.ignore();
     cout << "Enter your Name: ";
     cin.getline(customer.name, 50);
-   
+    cout << "Enter your Email: ";
+    cin.getline(customer.email, 50);
+    cout << "Enter your Phone Number: ";
+    cin.getline(customer.phone, 15);
+    cout << "Enter your CNIC: ";
+    cin.getline(customer.cnic, 15);
 
     saveCustomerDetails(customer);
 
