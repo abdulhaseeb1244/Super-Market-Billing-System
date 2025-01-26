@@ -90,9 +90,7 @@ void saveCustomerDetails(const Customer &customer) {
     }
 
     file << "Name: " << customer.name << "\n"
-         << "Email: " << customer.email << "\n"
-         << "Phone: " << customer.phone << "\n"
-         << "CNIC: " << customer.cnic << "\n\n";
+         
     file.close();
 }
 
@@ -129,7 +127,31 @@ void addProduct() {
     cout << "Product added successfully!\n";
 }
 
+// Admin: Edit an existing product
+void editProduct() {
+    int id;
+    cout << "Enter product ID to edit: ";
+    cin >> id;
 
+    for (int i = 0; i < productCount; i++) {
+        if (products[i].productID == id) {
+            cout << "Editing product: " << products[i].name << "\n";
+            cout << "Enter new name: ";
+            cin.ignore();
+            cin.getline(products[i].name, 50);
+            cout << "Enter new price: ";
+            cin >> products[i].price;
+            cout << "Enter new quantity: ";
+            cin >> products[i].quantity;
+
+            saveProducts();
+            cout << "Product updated successfully!\n";
+            return;
+        }
+    }
+
+    cout << "Product not found.\n";
+}
 
 // Admin: Delete a product
 void deleteProduct() {
@@ -226,12 +248,7 @@ void authenticateCustomer(Customer &customer) {
     cin.ignore();
     cout << "Enter your Name: ";
     cin.getline(customer.name, 50);
-    cout << "Enter your Email: ";
-    cin.getline(customer.email, 50);
-    cout << "Enter your Phone Number: ";
-    cin.getline(customer.phone, 15);
-    cout << "Enter your CNIC: ";
-    cin.getline(customer.cnic, 15);
+   
 
     saveCustomerDetails(customer);
 
@@ -256,7 +273,27 @@ void searchProductByID() {
     cout << "Product not found.\n";
 }
 
+// Search products by Name
+void searchProductByName() {
+    char name[50];
+    cout << "Enter product name to search: ";
+    cin.ignore();
+    cin.getline(name, 50);
 
+    bool found = false;
+    for (int i = 0; i < productCount; i++) {
+        if (strstr(products[i].name, name)) {
+            cout << "Product found: " << products[i].name << "\n"
+                 << "Price: " << products[i].price << "\n"
+                 << "Available stock: " << products[i].quantity << "\n";
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "Product not found.\n";
+    }
+}
 
 // Customer: Product menu (View/Search Products)
 void productMenu() {
