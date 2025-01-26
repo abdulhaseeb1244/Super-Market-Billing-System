@@ -261,7 +261,10 @@ void adminMenu() {
     while (true) {
         cout << "\nAdmin Menu:\n";
         cout << "1. Add Product\n";
-        cout << "2. Exit\n";
+        cout << "2. Edit Product\n";
+        cout << "3. Delete Product\n";
+        cout << "4. View Products\n";
+        cout << "5. Exit\n";
         cout << "Enter your choice: ";
         int choice;
         cin >> choice;
@@ -271,6 +274,15 @@ void adminMenu() {
                 addProduct();
                 break;
             case 2:
+                editProduct();
+                break;
+            case 3:
+                deleteProduct();
+                break;
+            case 4:
+                viewProducts();
+                break;
+            case 5:
                 return;
             default:
                 cout << "Invalid choice. Try again.\n";
@@ -278,6 +290,23 @@ void adminMenu() {
     }
 }
 
+// Function to verify admin credentials
+bool verifyAdmin() {
+    string username, password;
+    cout << "Enter Admin Username: ";
+    cin >> username;
+    cout << "Enter Admin Password: ";
+    cin >> password;
+
+    // Hardcoded admin credentials
+    if (username == "admin" && password == "admin") {
+        cout << "Access granted. Welcome, Admin!\n";
+        return true;
+    } else {
+        cout << "Invalid username or password. Access denied.\n";
+        return false;
+    }
+}
 
 // Main Menu
 int main() {
@@ -293,11 +322,15 @@ int main() {
         cin >> choice;
 
         switch (choice) {
-           
             case 1:
-                customerMenu();
+                if (verifyAdmin()) {
+                    adminMenu();
+                }
                 break;
             case 2:
+                customerMenu();
+                break;
+            case 3:
                 saveProducts();
                 cout << "Exiting program. Goodbye!\n";
                 return 0;
@@ -306,4 +339,3 @@ int main() {
         }
     }
 }
-
