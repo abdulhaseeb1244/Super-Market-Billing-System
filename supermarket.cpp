@@ -412,7 +412,7 @@ bool verifyAdmin() {
     cin >> password;
 
     // Hardcoded admin credentials
-    if (username == "admin" && password == "admin") {
+    if (username == "hefmart" && password == "12345") {
         cout << "Access granted. Welcome, Admin!\n";
         return true;
     } else {
