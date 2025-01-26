@@ -31,7 +31,7 @@ int productCount = 0;
 // Function Prototypes
 void adminMenu();
 void customerMenu();
-void productMenu(); // New function
+void productMenu();
 void loadProducts();
 void saveProducts();
 void saveCustomerDetails(const Customer &customer);
@@ -39,6 +39,7 @@ void addProduct();
 void editProduct();
 void deleteProduct();
 void viewProducts();
+void viewCart(Product cart[], int cartSize); // New function
 void addToCart(Product cart[], int &cartSize, double &total);
 void checkout(Product cart[], int cartSize, double total, const Customer &customer);
 void authenticateCustomer(Customer &customer);
@@ -194,6 +195,25 @@ void viewProducts() {
     }
 }
 
+// Customer: View cart
+void viewCart(Product cart[], int cartSize) {
+    if (cartSize == 0) {
+        cout << "Your cart is empty.\n";
+        return;
+    }
+
+    cout << "\nYour Cart:\n";
+    cout << left << setw(10) << "ID" << setw(30) << "Name" << setw(10) << "Price" << "Quantity\n";
+    cout << string(60, '-') << "\n";
+
+    for (int i = 0; i < cartSize; i++) {
+        cout << left << setw(10) << cart[i].productID
+             << setw(30) << cart[i].name
+             << setw(10) << cart[i].price
+             << cart[i].quantity << "\n";
+    }
+}
+
 // Customer: Add to cart and checkout
 void addToCart(Product cart[], int &cartSize, double &total) {
     int id, qty;
@@ -345,8 +365,9 @@ void customerMenu() {
         cout << "\nCustomer Menu:\n";
         cout << "1. Product Menu\n";
         cout << "2. Add to Cart\n";
-        cout << "3. Checkout\n";
-        cout << "4. Exit\n";
+        cout << "3. View Cart\n"; // New option
+        cout << "4. Checkout\n";
+        cout << "5. Exit\n";
         cout << "Enter your choice: ";
         int choice;
         cin >> choice;
@@ -359,9 +380,12 @@ void customerMenu() {
                 addToCart(cart, cartSize, total);
                 break;
             case 3:
+                viewCart(cart, cartSize); // Call viewCart
+                break;
+            case 4:
                 checkout(cart, cartSize, total, customer);
                 return;
-            case 4:
+            case 5:
                 return;
             default:
                 cout << "Invalid choice. Try again.\n";
@@ -452,3 +476,4 @@ int main() {
         }
     }
 }
+
