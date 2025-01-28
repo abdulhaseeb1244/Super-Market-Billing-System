@@ -334,7 +334,7 @@ void customerMenu() {
         cout << "\nCustomer Menu:\n";
         cout << "1. Product Menu\n";
         cout << "2. Add to Cart\n";
-        cout << "3. View Cart\n"; // New option
+        cout << "3. View Cart\n"; 
         cout << "4. Checkout\n";
         cout << "5. Exit\n";
         cout << "Enter your choice: ";
@@ -394,23 +394,41 @@ void adminMenu() {
         }
     }
 }
+#include <iostream>
+#include <string>
+using namespace std;
+
 // Function to verify admin credentials
 bool verifyAdmin() {
     string username, password;
-    cout << "Enter Admin Username: ";
-    cin >> username;
-    cout << "Enter Admin Password: ";
-    cin >> password;
+    int attemptCount = 0;
+    const int maxAttempts = 3; // Maximum number of allowed attempts
 
-    // Hardcoded admin credentials
-    if (username == "hefmart" && password == "12345") {
-        cout << "Access granted. Welcome, Admin!\n";
-        return true;
-    } else {
-        cout << "Invalid username or password. Access denied.\n";
-        return false;
+    while (attemptCount < maxAttempts) {
+        try {
+            cout << "Enter Admin Username: ";
+            cin >> username;
+            cout << "Enter Admin Password: ";
+            cin >> password;
+                
+            if (username == "hefmart" && password == "12345") {
+                cout << "Access granted. Welcome, Admin!\n";
+                return true;
+            } else {
+                attemptCount++;
+                if (attemptCount < maxAttempts) {
+                    throw "Invalid username or password. Please try again.\n";
+                }
+            }
+        } catch (const char *errMsg) {
+            cout << errMsg;
+        }
     }
+
+    cout << "Too many failed attempts. Access denied.\n";
+    return false;
 }
+
 // Main Menu
 int main() {
     loadProducts();
