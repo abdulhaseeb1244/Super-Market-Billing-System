@@ -394,9 +394,6 @@ void adminMenu() {
         }
     }
 }
-#include <iostream>
-#include <string>
-using namespace std;
 
 // Function to verify admin credentials
 bool verifyAdmin() {
